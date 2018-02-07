@@ -1,0 +1,22 @@
+version: '2'
+services:
+    truffle:
+        build:
+            context: ./truffle
+            dockerfile: Dockerfile
+        image: ${TRUFFLE_IMAGE_NAME}
+        volumes:
+            - ${TRUFFLE_PROJECT_FOLDER}:/Ethereum
+        command: bash
+        stdin_open: true
+        tty: true
+        ports:
+          - "7001:8080"
+    testrpc:
+        build:
+            context: ./testrpc
+            dockerfile: Dockerfile
+        image: hermeslin/testrpc:v1
+        command: bash -c "testrpc -h 0.0.0.0"
+        ports:
+          - "7000:8545"
